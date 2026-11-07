@@ -1,0 +1,4 @@
+# Normaliza o fim de linha no Git. Scripts de shell rodam dentro de contêineres
+# Linux e quebram com CRLF, mesmo quando o repositório é clonado no Windows.
+* text=auto
+*.sh text eol=lf

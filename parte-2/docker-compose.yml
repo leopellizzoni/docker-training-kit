@@ -1,0 +1,38 @@
+# Dois sites e um balanceador na frente.
+# Uso: docker compose up -d --build
+name: parte-2          # prefixo dos contêineres: parte-2-site1-1, parte-2-site2-1...
+
+services:
+  site1:
+    build:
+      context: ./sistema/site1       # a pasta do site; só ela entra na imagem
+      dockerfile: ../../Dockerfile.site
+    ports:
+      - "8085:80"
+
+  site2:
+    build:
+      context: ./sistema/site2
+      dockerfile: ../../Dockerfile.site
+    ports:
+      - "8086:80"
+
+  balanceador:
+    image: nginx:1.30-alpine
+    volumes:
+      - ./balanceador/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - "8084:80"
+    depends_on:
+      - site1
+      - site2
+
+  # Não sobe com "up": roda só quando chamado, com "docker compose run --rm cliente".
+  # Usa a imagem do nginx só porque ela já está baixada e traz wget e sh.
+  # Sem depends_on de propósito: senão o "run" religaria os sites que você derrubou.
+  cliente:
+    image: nginx:1.30-alpine
+    profiles: [ferramentas]
+    entrypoint: ["sh", "/conta.sh"]
+    volumes:
+      - ./cliente/conta.sh:/conta.sh:ro

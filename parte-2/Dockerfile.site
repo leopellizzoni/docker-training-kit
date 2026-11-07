@@ -1,0 +1,8 @@
+# Usa a imagem base do nginx, com a versão fixa
+FROM nginx:1.30-alpine
+
+# Copia o site (a pasta indicada em "context" no docker-compose.yml) para a pasta padrão do nginx
+COPY . /usr/share/nginx/html
+
+# Expõe a porta padrão do nginx
+EXPOSE 80
