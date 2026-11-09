@@ -35,6 +35,7 @@ docker ps
 - `-d` executa o contêiner em segundo plano e libera o terminal.
 - `--name site-v1` define o nome do contêiner. Sem essa opção, o Docker gera um nome aleatório.
 - `-p 8084:80` liga a porta 8084 do computador à porta 80 do contêiner, onde o nginx atende.
+- docker image é o comando usado para listar a imagem. Deverá aparecer se foi criado com sucesso no comando anterior
 
 Abra <http://localhost:8084> no navegador. Recarregue a página algumas vezes e veja o log do nginx. Cada linha corresponde a uma requisição:
 
